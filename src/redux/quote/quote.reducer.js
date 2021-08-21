@@ -1,5 +1,5 @@
 const INITIAL_STATE = {
-  quoteText: 'NO QUOTE FOR NOW :)',
+  quoteText: 'Sorry, please try again :)',
   quoteAuthor: 'admin'
 }
 
@@ -15,6 +15,8 @@ const quoteReducer = (state = INITIAL_STATE, action) => {
         ...state,
         quoteAuthor: action.payload
       }
+    case 'RESET_QUOTE':
+        return INITIAL_STATE;
     default:
       return state;
   }
