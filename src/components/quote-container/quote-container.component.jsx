@@ -4,7 +4,10 @@ import { connect } from "react-redux";
 import { FaQuoteLeft } from "react-icons/fa";
 
 import QuoteService from "../../services/quote.service";
+
+import { setLoaderStatus } from "../../redux/loader/loader.actions";
 import { setQuoteText, setQuoteAuthor, resetQuote } from "../../redux/quote/quote.actions";
+
 import CustomButton from "../custom-button/custom-button.component";
 
 import "./quote-container.styles.scss";
@@ -12,16 +15,18 @@ import "./quote-container.styles.scss";
 class QuoteContainer extends React.Component {
 
   changeQuote = () => {
-    const {setQuoteText, setQuoteAuthor, resetQuote} = this.props;
-
+    const {setLoaderStatus, setQuoteText, setQuoteAuthor, resetQuote} = this.props;
+    
     const fetchQuote = QuoteService();
 
     fetchQuote
       .then((quote) => {
+        setLoaderStatus(false);
         setQuoteText(quote.quoteText);
         setQuoteAuthor(quote.quoteAuthor);
       })
       .catch((error) => {
+        setLoaderStatus(false);
         resetQuote();
       });
   }
@@ -31,6 +36,10 @@ class QuoteContainer extends React.Component {
   }
 
   handleClick = () => {
+    const {setLoaderStatus} = this.props;
+
+    setLoaderStatus(true);
+
     this.changeQuote();
   };
 
@@ -62,6 +71,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  setLoaderStatus: (quote) => dispatch(setLoaderStatus(quote)),
+
   setQuoteText: (quote) => dispatch(setQuoteText(quote)),
   setQuoteAuthor: (quote) => dispatch(setQuoteAuthor(quote)),
   resetQuote: (quote) => dispatch(resetQuote(quote)),
