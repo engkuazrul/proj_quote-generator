@@ -1,5 +1,5 @@
 const INITIAL_STATE = {
-  quoteText: 'Sorry, please try again :)',
+  quoteText: 'Welcome, click new quote to generate new quote',
   quoteAuthor: 'admin'
 }
 
